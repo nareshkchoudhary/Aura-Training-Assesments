@@ -1,0 +1,62 @@
+<aura:component controller="AccountsWithContacts">
+        <aura:attribute name="acc" type="Account[]" />
+        <aura:attribute name="accId" type="String"/>
+        <aura:attribute name="cont" type="Contact[]"/>
+        <aura:attribute name="contFlag" type="boolean" default="false"/>
+        <aura:attribute name="contId" type="String"/>
+        <aura:attribute name="contDetailFlag" type="boolean" default="false"/>
+        <aura:attribute name="contDetail" type="Contact" default="{'sobjectType':'Contact'}"/>
+
+        <div class="btn">
+            <lightning:button label="showAccounts" onclick="{!c.doInit}" variant="brand"/>
+        </div>
+        <aura:attribute name="flag" type="boolean" default="false"/>
+        <aura:if isTrue="{!v.flag}">
+            <lightning:card title="Accounts" iconName="standard:account" class="slds-var-m-around_xx-large">
+                    <div style="padding:10px;">
+                        <lightning:select name="acc1" label="Choose any Account" aura:id="accPicklist" value="{!v.accId}" onchange="{!c.changeSelect}">
+                            <option value="--select--">--select--</option>
+                            <aura:iteration items="{!v.acc}" var="a">
+                                <option value="{!a.Id}">{!a.Name}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </lightning:card>
+                
+        </aura:if>
+        <aura:if isTrue="{!v.contFlag}">
+                <lightning:card title="Related Contacts" iconName="standard:contact" class="slds-var-m-around_xx-large">
+                    <div style="padding:10px;">
+                        <lightning:select name="cont1" label="Choose any Account" aura:id="contPicklist" value="{!v.contId}" onchange="{!c.changeSelectContact}">
+                            <option value="--select--">--select--</option>
+                            <aura:iteration items="{!v.cont}" var="a">
+                                <option value="{!a.Id}">{!a.Name}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </lightning:card>
+        </aura:if>
+        <aura:if isTrue="{!v.contDetailFlag}">
+            <lightning:card iconName="standard:contact" class="slds-var-m-around_xx-large">
+                <aura:set attribute="title">
+                    Contact Details for <b>{!v.contDetail.Name}</b>
+                </aura:set>
+                <div>
+                    <table class="tb">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Title</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                        </tr>
+                        <tr>
+                            <td>{!v.contDetail.Name}</td>
+                            <td>{!v.contDetail.Title}</td>
+                            <td>{!v.contDetail.Email}</td>
+                            <td>{!v.contDetail.Phone}</td>
+                        </tr>
+                    </table>
+                </div>
+            </lightning:card>
+        </aura:if>
+</aura:component>	
